@@ -39,10 +39,10 @@ namespace game {
 }
 
 int main() {
-    int width = 30;
-    int height = 10;
+    const int width = 30;
+    const int height = 10;
     loorna::Scene *myScene;
-    
+
     loorna::Scene testLevel(height, width);
     game::Player player(4, 5, loorna::Tile("\u263A", loorna::Color(129, 60, 253), loorna::Color(38, 38, 38)) );
     game::Box box1(5, 7, loorna::Tile("\u250F", loorna::Color(32, 212, 80), loorna::Color(38, 38, 38)) );
@@ -63,8 +63,8 @@ int main() {
         myScene->Update();
         myScene->Render();
         player.PrintOutInfo();
-        std::cout << "Height: " << myScene->GetSceneHeight() << " Width: " << myScene->GetSceneWidth() << std::endl;
-        
+        // std::cout << "Height: " << myScene->GetSceneHeight() << " Width: " << myScene->GetSceneWidth() << std::endl;
+        printf("Height: %i Width: %i\n", height, width);
         
         player.Move(myScene, singleton->value().CollMap);
     }

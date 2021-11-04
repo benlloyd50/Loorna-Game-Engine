@@ -10,7 +10,8 @@
     - Terminal is having issues printing out to the console where it can not keep up if buttons are held
         - We could slow down inputting, which MIGHT feel clunky
         - We could restrict grid size to being somewhat small to help the console keep up
-        - We could see if there is a better way of outputting through the console.
+        -Implement a double buffer to update the grid with only what has changed from the previous frame
+        # We could see if there is a better way of outputting through the console. There is printf
     - Is UNICODE truly essential?
         - It seems very cool and versatile and I really want it for those reasons
         - But it holds back how the program will function else where since it is not supported in alot of places... ie VSCODE

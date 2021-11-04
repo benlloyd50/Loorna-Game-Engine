@@ -3,6 +3,7 @@
 
 //Usual C++ Libraries
 #include <iostream>
+
 #include <vector>
 #include <string>
 
@@ -120,8 +121,8 @@ namespace loorna {
             //     bgColor = "\33[38;2;" + to_string(br) + ";" + to_string(bg) + ";" + to_string(bb) + "m";
             // }
             
-            void Output() {
-                std::cout << "\33[38;2;" << textColor.ToString() << "\33[48;2;" << bgColor.ToString() << sprite;
+            string GetColoredString() {
+                return "\33[38;2;" + textColor.ToString() + "\33[48;2;" + bgColor.ToString() + sprite;
             }
 
     };
@@ -139,7 +140,8 @@ namespace loorna {
 
             //Gives the information of the PointObject, mainly for debug
             void PrintOutInfo() {
-                std::cout << "My sprite is " << tile.sprite << "\nMy x:" << pos.x << " My y:" << pos.y << std::endl;
+                // std::cout << "My sprite is " << tile.sprite << "\nMy x:" << pos.x << " My y:" << pos.y << std::endl;
+                printf("My sprite is %s\nMy x: %i My y: %i\n", tile.sprite.c_str(), pos.x, pos.y);
             }
 
     };
@@ -200,16 +202,18 @@ namespace loorna {
             void Render() {                
                 //Gives the game the feeling of a frame being display rather than a chat log effect
                 std::cout << "\033[2J\033[0;0H";
+                string output;
 
                 for (int y = 0; y < rows; y++) {
                     for (int x = 0; x < cols; x++) {
-                        grid[y][x].Output();
-                        // std::cout << " ";
+                        output += grid[y][x].GetColoredString();
                     }
-                    //Resets console output to default display options
-                    std::cout << std::endl << "\033[0m";
+                    output += '\n';
                 }
-                
+
+                //Both accomplish same thing, but printf seems better at times
+                printf("%s\033[0m", output.c_str());
+                // std::cout << output << "\033[0m";
             }
 
             void AddPointToScene(PointObject* p) {
