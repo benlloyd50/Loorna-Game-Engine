@@ -204,7 +204,7 @@ namespace loorna {
                 for (int y = 0; y < rows; y++) {
                     for (int x = 0; x < cols; x++) {
                         grid[y][x].Output();
-                        std::cout << " ";
+                        // std::cout << " ";
                     }
                     //Resets console output to default display options
                     std::cout << std::endl << "\033[0m";
@@ -242,11 +242,8 @@ namespace loorna {
                     
             }
 
-            
     };
 
-
-    
 }
 
 #endif

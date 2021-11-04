@@ -39,18 +39,20 @@ namespace game {
 }
 
 int main() {
-    int width = 10;
-    int height = 12;
+    int width = 30;
+    int height = 10;
     loorna::Scene *myScene;
     
     loorna::Scene testLevel(height, width);
     game::Player player(4, 5, loorna::Tile("\u263A", loorna::Color(129, 60, 253), loorna::Color(38, 38, 38)) );
-    game::Box box1(5, 7, loorna::Tile("\u2317", loorna::Color(32, 212, 80), loorna::Color(38, 38, 38)) );
-    game::Box box2(1, 2, loorna::Tile("\u2317", loorna::Color(32, 212, 80), loorna::Color(38, 38, 38)) );
+    game::Box box1(5, 7, loorna::Tile("\u250F", loorna::Color(32, 212, 80), loorna::Color(38, 38, 38)) );
+    game::Box box2(6, 7, loorna::Tile("\u2501", loorna::Color(32, 212, 80), loorna::Color(38, 38, 38)) );
+    game::Box box3(7, 7, loorna::Tile("\u2513", loorna::Color(32, 212, 80), loorna::Color(38, 38, 38)) );
 
     testLevel.AddPointToScene(&player);
     testLevel.AddPointToScene(&box1);
     testLevel.AddPointToScene(&box2);
+    testLevel.AddPointToScene(&box3);
 
     myScene = &testLevel;
 

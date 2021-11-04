@@ -6,6 +6,15 @@
 
 ~~~V 0.1 Loorna Engine ~~~
 
+~ Better Cross Platform Support
+    - Terminal is having issues printing out to the console where it can not keep up if buttons are held
+        - We could slow down inputting, which MIGHT feel clunky
+        - We could restrict grid size to being somewhat small to help the console keep up
+        - We could see if there is a better way of outputting through the console.
+    - Is UNICODE truly essential?
+        - It seems very cool and versatile and I really want it for those reasons
+        - But it holds back how the program will function else where since it is not supported in alot of places... ie VSCODE
+
 ~ A more intuitive grid
     - I dont like how printing [y][x] is how you get access to the (x,y) position
     - I dont like how I need to subtract my 'y' to go up the array and vice versa
