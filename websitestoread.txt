@@ -1,0 +1,9 @@
+
+ansi escapes
+https://en.wikipedia.org/wiki/ANSI_escape_code#Terminal_input_sequences
+
+unicode wiki
+https://en.wikipedia.org/wiki/List_of_Unicode_characters
+
+rgb chart
+https://www.rapidtables.com/web/color/RGB_Color.html

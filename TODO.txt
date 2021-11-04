@@ -1,0 +1,59 @@
+~ = New point
+- = subpoint
+* = Extra note about point
+? = questionable idea
+# = feature complete
+
+~~~V 0.1 Loorna Engine ~~~
+
+~ A more intuitive grid
+    - I dont like how printing [y][x] is how you get access to the (x,y) position
+    - I dont like how I need to subtract my 'y' to go up the array and vice versa
+    ?Question remains, am I an odd one or should I change it to be [x][y]
+
+~ "Tile" idea for grid
+    -A string "sName" that will reference the SpriteDict and get the sprite from there
+        *may need a workaround if there would be multiple names otherwise declare it multiple times in RawSpriteDict
+    -Will rely on a SpriteDict that contains defintions for all sprites
+        -Key is the name of the sprite, defined on the leftside of the text file "RawSpriteDict"
+        -Value will be an int Unicode value that can be converted to a string to be displayed
+    #Tile will also contain variables for color/style options
+        -int Variables: 
+                    textStyle -> 0 - 4 -> different text styles like bold underline etc
+                    textColor -> 30 - 37 or 38;2;r;g;b; -> color of the text
+                    bgColor -> 40 - 47 or 48;2;r;g; -> color of the background of the text
+                        *text and bg have lighter alternatives but we may avoid for simplicity sake... not sure
+                        *a note about the rgb, a vector3 or color type may help?
+    ?SpriteDict may contain color options "prebaked" meaning the text file knows what color it will be and will be updated as such when sprites are loaded
+    
+~ Points and Rects
+    -These along with possible other will be used to represent shapes on the grid
+    -Triangles, Circle, and Irregular may be possible to add
+    -These should only know the boundaries and nature of the shape and not Collision
+    -Ability to delete them
+
+~ Rooms
+    -A way to have better management of rooms in a scene
+    -Would have a direction to other rooms that is managed by the scene
+    -Contains the info of the grid size/layout and objects present in it
+
+~ Collision
+    -As part of the gameObject
+    #isPassable = to function whether something isPassable
+    -isInteractable = if within a radius, a key press can be detected and something will happen
+    #Collision Bool Map may be a solution
+        -Add true to collision map where Points/Rects are !isPassable
+        -Ability to check any shape against the map
+    -rollback position for shapes/dot
+
+~ Text Scenes
+    -Essentially A way to add text to the scene in a flexible ways
+        -Text Color and Background Color
+        -Bubble Text
+    -Could HUD Text or Notification Text for some sort of alert
+
+~ Scene Switching
+    -Ability to have the game engine tell the game to switch scenes
+
+    
+        
