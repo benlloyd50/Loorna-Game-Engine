@@ -59,13 +59,13 @@ int main() {
     game::GameManager GM(myScene->GetSceneHeight(), myScene->GetSceneWidth());
     Singleton<game::GameManager>* singleton = Singleton<game::GameManager>::GetInstance(GM);
 
+    
     while(1) {
         myScene->Update();
-        myScene->Render();
+        myScene->DoubleBuffRender();
         player.PrintOutInfo();
         // std::cout << "Height: " << myScene->GetSceneHeight() << " Width: " << myScene->GetSceneWidth() << std::endl;
         printf("Height: %i Width: %i\n", height, width);
-        
         player.Move(myScene, singleton->value().CollMap);
     }
 

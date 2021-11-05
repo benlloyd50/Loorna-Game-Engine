@@ -3,7 +3,7 @@
 
 //Usual C++ Libraries
 #include <iostream>
-
+#include <cstring>
 #include <vector>
 #include <string>
 
@@ -26,10 +26,24 @@ int getch() {
     tcsetattr(STDIN_FILENO,TCSANOW,&oldattr);
     return ch;
 }
+void SetCursorPos(int XPos, int YPos)
+{
+    printf("\033[%d;%dH", YPos + 1, XPos + 1);
+}
 #endif
 #ifdef _WIN32
 // If the code is being compiled on Windows
 #include <conio.h>
+
+void SetCursorPos(int XPos, int YPos)
+{
+    COORD Coord;
+
+    Coord.X = XPos;
+    Coord.Y = YPos;
+
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Coord);
+}
 #endif
 
 using std::string;
@@ -86,6 +100,10 @@ namespace loorna {
             //Copy Constructor
             Color(const Color& c) { r = c.r; g = c.g; b = c.b; }
 
+            bool operator ==(Color c) {
+                return (r == c.r && g == c.g && b == c.b);
+            }
+
             //Returns a string without ansi escape sequence included
             string ToString() {
                 return to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m";
@@ -112,6 +130,10 @@ namespace loorna {
             //Constructor with a string and color information provided
             Tile(string _sprite, Color text, Color bg) : textColor(text), bgColor(bg) {
                 sprite = _sprite;
+            }
+
+            bool operator ==(Tile t) {
+                return (sprite == t.sprite && bgColor == t.bgColor && textColor == t.textColor);
             }
 
             // //Constructor with added color options
@@ -155,6 +177,7 @@ namespace loorna {
             int cols;
             int rows;
             Tile** grid;
+            Tile** prevGrid;
             std::vector<PointObject*> AlivePointObjs;
 
         public:
@@ -163,18 +186,19 @@ namespace loorna {
                 rows = height;
                 cols = width;
                 grid = new Tile*[rows];
+                prevGrid = new Tile*[rows];
 
                 for (int i = 0; i < rows; i++) {
                     grid[i] = new Tile[cols];
+                    prevGrid[i] = new Tile[cols];
                 }
 
                 for (int y = 0; y < rows; y++) {
                     for (int x = 0; x < cols; x++) {
                         grid[y][x] = Tile();
+                        prevGrid[y][x] = Tile();
                     }
                 }
-                
-
             }
             //How to destructor?
             ~Scene() {
@@ -216,6 +240,34 @@ namespace loorna {
                 // std::cout << output << "\033[0m";
             }
 
+            void DoubleBuffRender() {
+                //Clears overhead console text then prints out the game grid only writing what was is not updated
+                std::cout << "\033[2J\033[0;0H";
+
+                for (int y = 0; y < rows; y++) {
+                    for (int x = 0; x < cols; x++) {
+                        if (grid[y][x] == prevGrid[y][x]) 
+                            continue;
+                        
+                        SetCursorPos(x, y);
+                        std::cout << grid[y][x].GetColoredString();
+                    }
+                }
+
+                std::cout.flush();
+                SetCursorPos(0, rows);
+                
+                for (int y = 0; y != rows; ++y) {
+                    for (int x = 0; x != cols; ++x) {
+                        prevGrid[y][x] = grid[y][x];
+                        // grid[y][x].sprite = prevGrid[y][x].sprite;
+                        // grid[y][x].textColor = prevGrid[y][x].textColor;
+                        // grid[y][x].bgColor = prevGrid[y][x].bgColor;
+                    }
+                }           
+                std::cout << "\033[0m==============================\n";
+            }
+
             void AddPointToScene(PointObject* p) {
                 AlivePointObjs.push_back(p);
             }
@@ -243,7 +295,6 @@ namespace loorna {
             void RenderLetters() {
                 string test = "\u263A";
                 std::cout << test;
-                    
             }
 
     };
