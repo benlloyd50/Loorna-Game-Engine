@@ -179,6 +179,7 @@ namespace loorna {
             Tile** grid;
             Tile** prevGrid;
             std::vector<PointObject*> AlivePointObjs;
+            bool firstFrame = true;
 
         public:
             //Default constructor that initializes the game grid
@@ -199,6 +200,10 @@ namespace loorna {
                         prevGrid[y][x] = Tile();
                     }
                 }
+                
+                
+                //Update();
+                //Render();
             }
             //How to destructor?
             ~Scene() {
@@ -241,30 +246,32 @@ namespace loorna {
             }
 
             void DoubleBuffRender() {
-                //Clears overhead console text then prints out the game grid only writing what was is not updated
-                std::cout << "\033[2J\033[0;0H";
-
+                if(firstFrame) {
+                   std::cout << "\033[2J\033[0;0H"; 
+                }
+                
                 for (int y = 0; y < rows; y++) {
                     for (int x = 0; x < cols; x++) {
-                        if (grid[y][x] == prevGrid[y][x]) 
+                        if (grid[y][x] == prevGrid[y][x] && !firstFrame) 
                             continue;
                         
                         SetCursorPos(x, y);
                         std::cout << grid[y][x].GetColoredString();
                     }
                 }
+                firstFrame = false;
 
                 std::cout.flush();
                 SetCursorPos(0, rows);
-                
-                for (int y = 0; y != rows; ++y) {
-                    for (int x = 0; x != cols; ++x) {
+
+                for (int y = 0; y < rows; y++) {
+                    for (int x = 0; x < cols; x++) {
                         prevGrid[y][x] = grid[y][x];
                         // grid[y][x].sprite = prevGrid[y][x].sprite;
                         // grid[y][x].textColor = prevGrid[y][x].textColor;
                         // grid[y][x].bgColor = prevGrid[y][x].bgColor;
                     }
-                }           
+                }     
                 std::cout << "\033[0m==============================\n";
             }
 

@@ -18,7 +18,7 @@ namespace game {
         public:
             void Move(loorna::Scene* const scene, BinaryCollision collMap) {
                 char c = getch();
-                std::cout << "x: " << this->pos.x << " y: " << this->pos.y + 1 << std::endl;
+                //std::cout << "x: " << this->pos.x << " y: " << this->pos.y + 1 << std::endl;
 
                 if (c == 'w' && collMap.isPassable(this->pos.x, this->pos.y - 1))
                     this->pos.y -= 1;
@@ -63,9 +63,9 @@ int main() {
     while(1) {
         myScene->Update();
         myScene->DoubleBuffRender();
-        player.PrintOutInfo();
+        // player.PrintOutInfo();
         // std::cout << "Height: " << myScene->GetSceneHeight() << " Width: " << myScene->GetSceneWidth() << std::endl;
-        printf("Height: %i Width: %i\n", height, width);
+        // printf("Height: %i Width: %i\n", height, width);
         player.Move(myScene, singleton->value().CollMap);
     }
 
